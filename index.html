@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rectangle Calculator</title>
+    <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/ios7-inspired-mac-icon-set/512/Calculator_512.png" type="image/x-icon">
+</head>
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+    section.Container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 100%;
+        box-sizing: border-box;
+        min-height: 100vh;
+        background-color: blue;
+        padding: 40px 15px;
+    }
+
+    label.width,label.length{
+        font-weight: 700; font-size: large; margin: 0px 0px 4px 0px;
+    }
+
+    input.inputWidth{
+        padding: 10px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        
+    }
+    button.buttonCalculate{
+background-color: burlywood;
+    }
+    button.buttonCalculate:hover{
+        transform: rotate(360deg) scale(90%);
+    }
+    button.buttonCalculate:focus{
+        background-color: green;
+    }
+
+
+</style>
+<body>
+    <section class="Container">
+        <article style="max-width: 600px; width: 100%; background-color: aquamarine; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 15px; box-sizing: border-box; overflow: hidden; border-radius: 10px;">
+            <h1 style="font-size: xx-large; text-align: center; margin: 0px 0px 30px 0px; ">Rectangle Calculator</h1>
+            <article style="display: flex; justify-content: center; gap: 10px; width: 100%; flex-wrap: wrap;">
+                <div style="width: 40%; display: flex; align-items: center; flex-direction: column;">
+                    <label class="width" for="width">Width</label>
+                    <input type="text" class="inputWidth" name="width" id="width" required>
+                </div>
+                <div class="height" style="width: 40%; display: flex; align-items: center; flex-direction: column;">
+                    <label class="length" for="length">Length</label>
+                    <input type="text" class="inputWidth" name="length" id="length" required>
+                </div>
+                <div style="width: 100%; margin-top: 20px;">
+                    <button class="buttonCalculate" style="transition: all 500ms ease-in-out; width: 100%; border-radius: 10px; padding: 10px;">Calculate</button>
+                </div>
+            </article>
+            <div class="ContainerOutput" style="width: 100%;">
+
+            </div>
+           
+            
+        </article>
+    </section>
+
+
+    <script>
+        const button = document.querySelector(".buttonCalculate");
+        const length = document.querySelector("#length");
+        const width = document.querySelector("#width");
+        const OutputContainer = document.querySelector(".ContainerOutput");
+        let statusButton = false;
+    
+        length.addEventListener("keyup", () => { Calculate() })
+        width.addEventListener("keyup", () => { Calculate() })
+        button.addEventListener("click", () => { statusButton = true; Calculate() });
+    
+        function Calculate() {
+    
+            if (statusButton) {
+                const widthValue = parseFloat(width.value);
+                const lengthValue = parseFloat(length.value);
+    
+                if (isNaN(widthValue) && isNaN(lengthValue)) {
+                    length.style.color = "red";
+                    width.style.color = "red";
+    
+                    OutputContainer.innerHTML = ` <h2 style="font-size: xx-large;  margin: 40px 0px 30px 0px; ">Output</h2>
+                    <p style="color:red;">Please input width and length as numbers</p>
+                    `;
+                } else if (isNaN(widthValue)) {
+                    width.style.color = "red";
+                    length.style.color = "black";
+                    OutputContainer.innerHTML = ` <h2 style="font-size: xx-large;  margin: 40px 0px 30px 0px; ">Output</h2>
+                    <p style="color:red;">Please input width as a number</p>
+                    `;
+                } else if (isNaN(lengthValue)) {
+                    length.style.color = "red";
+                    width.style.color = "black";
+                    OutputContainer.innerHTML = ` <h2 style="font-size: xx-large;  margin: 40px 0px 30px 0px; ">Output</h2>
+                    <p style="color:red;">Please input length as a number</p>
+                    `;
+                } else {
+                    length.style.color = "black";
+                    width.style.color = "black";
+
+                    const result = widthValue * lengthValue;
+                    const keliling = 2 * (widthValue + lengthValue);
+                    if (widthValue && lengthValue) {
+                        OutputContainer.innerHTML = ` <h2 style="font-size: xx-large; margin: 40px 0px 30px 0px; ">Output</h2>
+                        <p>Area of rectangle : <span style="font-weight:bold;">${result}</span> </p>
+                        <p>Perimeter/Circumference of the rectangle : <span style="font-weight:bold;">${keliling}</span> </p>
+                        `;
+                    } else {
+                        OutputContainer.innerHTML = " "
+                        width.style.color = "black";
+                        length.style.color = "black";
+                        statusButton = false;
+                    }
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>
